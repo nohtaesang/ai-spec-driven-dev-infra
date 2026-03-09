@@ -16,18 +16,11 @@ The system is designed so that a human only needs to type `/next` to drive all p
 
 ## Quick Start
 
-```bash
-# 1. Clone the template
-git clone https://github.com/nohtaesang/ai-spec-driven-dev-infra my-project
-cd my-project
+Clone the repository and open it in Claude Code.
 
-# 2. Start Claude Code in this repository
+Then say:
 
-# 3. Begin the workflow
-/next
-```
-
-That's it. `/next` handles everything — context restoration, task selection, execution, analysis, and audit.
+> Start the project workflow.
 
 ## How to start a project using this infrastructure
 
