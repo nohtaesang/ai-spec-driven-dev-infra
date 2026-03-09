@@ -2,7 +2,7 @@
 
 `/next` is the primary command for all project work. It runs the full workflow pipeline automatically.
 
-**The authoritative pipeline definition is in [`docs/ai/CLAUDE.md`](../ai/CLAUDE.md).** This file is a concise reference only. If there is any conflict, `CLAUDE.md` governs.
+**The authoritative pipeline definition is in [`docs/ai/CLAUDE.md`](../docs/ai/CLAUDE.md).** This file is a concise reference only. If there is any conflict, `CLAUDE.md` governs.
 
 ---
 
@@ -11,6 +11,7 @@
 ```
 /next
   │
+  ├─ 0. Bootstrap detection (if SPEC.md has BOOTSTRAP:PENDING → run bootstrap protocol)
   ├─ 1. Restore context (7 files: SPEC, NON_GOALS, ASSUMPTIONS, DOCUMENT_SYSTEM, CLAUDE, DEFINITIONS, TASKS)
   ├─ 2. Report state (phase, task, progress, governance status, 5 conflict checks)
   ├─ 3. Detect [-] or select next [ ]  →  set [-]  →  write progress: started
@@ -20,6 +21,12 @@
   ├─ 7. Auto-audit (13-point consistency check, stop on red)
   └─ 8. Complete  →  [x] + DONE.md + ADR file + DECISIONS.md
 ```
+
+## Step 0: Bootstrap
+
+When the repository is in template state (SPEC.md contains `<!-- BOOTSTRAP:PENDING -->` and no tasks are in progress or completed), `/next` enters bootstrap mode automatically.
+
+Bootstrap asks structured intake questions, generates foundation documents, selects Level-2 documents, and initializes Phase 1 tasks. See [`docs/ai/BOOTSTRAP_PROTOCOL.md`](../docs/ai/BOOTSTRAP_PROTOCOL.md) for the full protocol.
 
 ## `/next` (no arguments)
 

@@ -1,3 +1,4 @@
+<!-- BOOTSTRAP:PENDING -->
 # Non-Goals
 
 This document explicitly defines what the project is **not** trying to build. It exists to prevent scope creep and to give Claude a clear boundary for feature proposals.

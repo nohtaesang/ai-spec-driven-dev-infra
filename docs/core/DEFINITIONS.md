@@ -1,3 +1,4 @@
+<!-- BOOTSTRAP:PENDING -->
 # Definitions
 
 Canonical glossary for the project. Every domain term is defined here exactly once. All other documents reference this file rather than redefining terms.

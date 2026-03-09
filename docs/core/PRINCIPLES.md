@@ -1,3 +1,4 @@
+<!-- BOOTSTRAP:PENDING -->
 # Principles
 
 Design and engineering principles that guide all decisions in the project.

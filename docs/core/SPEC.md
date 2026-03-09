@@ -1,3 +1,4 @@
+<!-- BOOTSTRAP:PENDING -->
 # SPEC.md
 
 ## Purpose

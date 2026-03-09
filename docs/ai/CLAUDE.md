@@ -38,7 +38,18 @@ Implementation          ← code must conform to all above
 
 ## The `/next` Pipeline
 
-Every `/next` executes these 8 steps in order. Do not skip steps.
+Every `/next` starts with Step 0. If bootstrap is needed, run the bootstrap protocol. Otherwise, execute Steps 1–8 in order. Do not skip steps.
+
+### Step 0: Bootstrap Detection
+
+Before anything else, check if the project is in template state:
+
+1. Read `docs/core/SPEC.md`
+2. If it contains `<!-- BOOTSTRAP:PENDING -->` AND no tasks in `TASKS.md` are `[-]` or `[x]` → **enter bootstrap mode**
+3. Follow `docs/ai/BOOTSTRAP_PROTOCOL.md` for the full bootstrap procedure
+4. After bootstrap completes, stop. The user will run `/next` again to continue with the normal pipeline.
+
+If not in template state → proceed to Step 1.
 
 ### Step 1: Restore Context
 

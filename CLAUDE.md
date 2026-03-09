@@ -7,6 +7,7 @@ This is the root-level instruction file for Claude Code sessions using AI Spec-D
 Run `/next`. That's it.
 
 `/next` runs the full pipeline automatically:
+0. Detect template state → if still a template, run bootstrap (structured intake → generate foundation docs → select Level-2 docs → initialize Phase 1 tasks)
 1. Restore project context (SPEC.md first — it constrains everything)
 2. Report current state, SPEC conflicts, and ADR status
 3. Detect or select the next task

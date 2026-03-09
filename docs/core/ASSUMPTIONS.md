@@ -1,3 +1,4 @@
+<!-- BOOTSTRAP:PENDING -->
 # Assumptions
 
 This document captures the important assumptions that guide system design. These are not hard constraints like SPEC.md — they represent the expected operating conditions and usage patterns that inform architectural and design choices.

@@ -1,3 +1,4 @@
+<!-- BOOTSTRAP:PENDING -->
 # Vision
 
 *Define why this project exists, who it is for, and what long-term goals it serves.*

@@ -104,6 +104,7 @@ Individual Architecture Decision Record files. Each captures one architectural d
 | `CLAUDE.md` | Behavioral rules, `/next` pipeline (authoritative definition), task types, ADR rules, constraint enforcement. |
 | `DOCUMENT_SYSTEM.md` | This file. Describes the doc system and constraint hierarchy. |
 | `CHANGE_PROTOCOL.md` | State transitions, documentation change process, ADR creation triggers. |
+| `BOOTSTRAP_PROTOCOL.md` | Level-2 bootstrap: template detection, structured intake, foundation doc generation, Level-2 document selection. |
 
 ### `.claude/commands/` — Command Templates
 
