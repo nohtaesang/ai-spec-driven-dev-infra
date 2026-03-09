@@ -2,6 +2,8 @@
 
 A reusable governance and workflow infrastructure for building software projects with AI collaboration (Claude Code).
 
+**Infrastructure maturity: Level 2 (bootstrap-enabled)**
+
 ## What is this?
 
 This repository provides a **spec-driven development workflow** — a structured system where:
