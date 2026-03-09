@@ -16,11 +16,18 @@ The system is designed so that a human only needs to type `/next` to drive all p
 
 ## Quick Start
 
-Clone the repository and open it in Claude Code.
+1. Clone or copy this repository
 
-Then say:
+2. Register commands
 
-> Start the project workflow.
+```bash
+mkdir -p .claude/commands
+for cmd in next pick idea check critic audit analyze design implement; do
+  echo "Read and follow docs/commands/${cmd}.md" > .claude/commands/${cmd}.md
+done
+```
+
+3. Open it in Claude Code and say `/next`
 
 ## How to start a project using this infrastructure
 
