@@ -125,7 +125,7 @@ Example:
 
 ## Phase 1: Core Design Documents
 
-*Goal: Define domain models and architecture. Tasks will be added after Phase 0.*
+*Goal: Define domain models and architecture. Tasks will be added by bootstrap based on product type.*
 
 ---
 

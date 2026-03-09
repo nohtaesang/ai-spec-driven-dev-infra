@@ -39,13 +39,16 @@ Let's start with the project basics.
 
 Ask these 7 questions. All are required.
 
+**Important**: Question 3 asks about **product type** — what the software is to its users — not the implementation framework. A desktop annotation tool built with a game engine is a "desktop tool", not a "game". Framework choices belong in Round 2 (tech stack).
+
 ```
 Round 1: Project Identity
 
 1. Project name — What is this project called?
 2. One-line description — What does it do in one sentence?
-3. Project type — Choose: tool/CLI, web app/SaaS, library/framework,
-   mobile app, game/simulation, data pipeline, other
+3. Product type — What kind of software is this for the user?
+   Choose: desktop tool, web app, library/framework, mobile app,
+   game, data pipeline, other
 4. Target users — Who will use this?
 5. Core problem — What problem does it solve?
 6. Key capabilities — List 3–5 things it must do.
@@ -65,7 +68,7 @@ After all Round 1 answers are collected, produce a **concise summary block** and
 
 Project: <name>
 Description: <one-line>
-Type: <type>
+Product type: <type>
 Users: <target users>
 Problem: <core problem>
 Must do:
@@ -112,7 +115,7 @@ Using both rounds of intake, generate initial content for all 6 core documents.
 |---|---|---|
 | `SPEC.md` | Capabilities, tech stack, performance, integrations | Non-negotiable architectural constraints. Each capability becomes a SPEC entry. Tech choices become constraints. |
 | `VISION.md` | Name, description, problem, target users | Why the project exists, who it serves, what success looks like. |
-| `PRINCIPLES.md` | Project type, constraints | Design principles appropriate to the project type. Preserve the existing Engineering Principles section from the template. |
+| `PRINCIPLES.md` | Product type, constraints | Design principles appropriate to the product type. Preserve the existing Engineering Principles section from the template. |
 | `ASSUMPTIONS.md` | Tech stack, deployment, integrations | Operating assumptions about platform, runtime, dependencies. Items marked "to be decided" become explicit open questions. |
 | `NON_GOALS.md` | Non-goals from Round 1 | Explicit scope boundaries with explanations. |
 | `DEFINITIONS.md` | Key terms from all answers | Initial glossary seeded from intake vocabulary. |
@@ -163,25 +166,27 @@ If no technology choices were made, skip this step.
 
 ### B7: Select Level-2 Documents
 
-Based on the project type, present recommended Level-2 documents:
+Based on the **product type** (not the implementation framework), present recommended Level-2 documents.
 
-| Project Type | Recommended documents |
+The product type describes what the software is to its users. The tech stack (Round 2) does not change the document selection — a desktop tool built with Bevy gets "desktop tool" documents, not "game" documents.
+
+| Product Type | Recommended documents |
 |---|---|
-| tool/CLI | `docs/model/DATA_MODEL.md`, `docs/architecture/ARCHITECTURE.md`, `docs/ux/CLI_INTERFACE.md`, `docs/planning/SCOPE.md` |
-| web app/SaaS | `docs/model/DOMAIN_MODEL.md`, `docs/model/API_MODEL.md`, `docs/architecture/SYSTEM_ARCHITECTURE.md`, `docs/architecture/API_DESIGN.md`, `docs/ux/SCREENS.md`, `docs/planning/SCOPE.md` |
-| library/framework | `docs/model/API_MODEL.md`, `docs/architecture/MODULE_ARCHITECTURE.md`, `docs/ux/DEVELOPER_EXPERIENCE.md`, `docs/planning/SCOPE.md` |
-| mobile app | `docs/model/DOMAIN_MODEL.md`, `docs/architecture/SYSTEM_ARCHITECTURE.md`, `docs/ux/SCREENS.md`, `docs/planning/SCOPE.md` |
-| game/simulation | `docs/model/GAME_STATE_MODEL.md`, `docs/architecture/ENGINE_ARCHITECTURE.md`, `docs/ux/PLAYER_EXPERIENCE.md`, `docs/planning/SCOPE.md` |
-| data pipeline | `docs/model/DATA_MODEL.md`, `docs/model/SCHEMA.md`, `docs/architecture/PIPELINE_ARCHITECTURE.md`, `docs/planning/SCOPE.md` |
-| other | `docs/model/DOMAIN_MODEL.md`, `docs/architecture/ARCHITECTURE.md`, `docs/planning/SCOPE.md` |
+| desktop tool | `docs/planning/MVP_SCOPE.md`, `docs/model/DATA_MODEL.md`, `docs/architecture/ARCHITECTURE.md`, `docs/ux/UX_MODEL.md` |
+| web app | `docs/planning/MVP_SCOPE.md`, `docs/model/DOMAIN_MODEL.md`, `docs/model/API_MODEL.md`, `docs/architecture/SYSTEM_ARCHITECTURE.md`, `docs/architecture/API_DESIGN.md`, `docs/ux/SCREENS.md` |
+| library/framework | `docs/planning/MVP_SCOPE.md`, `docs/model/API_MODEL.md`, `docs/architecture/MODULE_ARCHITECTURE.md`, `docs/ux/DEVELOPER_EXPERIENCE.md` |
+| mobile app | `docs/planning/MVP_SCOPE.md`, `docs/model/DOMAIN_MODEL.md`, `docs/architecture/SYSTEM_ARCHITECTURE.md`, `docs/ux/SCREENS.md` |
+| game | `docs/planning/MVP_SCOPE.md`, `docs/model/GAME_STATE_MODEL.md`, `docs/architecture/ENGINE_ARCHITECTURE.md`, `docs/ux/PLAYER_EXPERIENCE.md` |
+| data pipeline | `docs/planning/MVP_SCOPE.md`, `docs/model/DATA_MODEL.md`, `docs/model/SCHEMA.md`, `docs/architecture/PIPELINE_ARCHITECTURE.md` |
+| other | `docs/planning/MVP_SCOPE.md`, `docs/model/DOMAIN_MODEL.md`, `docs/architecture/ARCHITECTURE.md` |
 
 ```
 === Level-2 Documents ===
 
-Based on your project type (<type>), I recommend these design documents
+Based on your product type (<type>), I recommend these design documents
 for Phase 1:
 
-  - docs/planning/SCOPE.md — MVP scope and boundaries
+  - docs/planning/MVP_SCOPE.md — MVP scope and boundaries
   - docs/model/<X>.md — <purpose>
   - docs/architecture/<X>.md — <purpose>
   - docs/ux/<X>.md — <purpose>
@@ -217,7 +222,7 @@ Output:
 === Bootstrap Complete ===
 
 Project: <name>
-Type: <type>
+Product type: <type>
 Foundation: 6 documents written
 ADRs: <count> created
 Phase 1: <count> design tasks queued
