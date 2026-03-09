@@ -105,7 +105,7 @@ Individual Architecture Decision Record files. Each captures one architectural d
 | `DOCUMENT_SYSTEM.md` | This file. Describes the doc system and constraint hierarchy. |
 | `CHANGE_PROTOCOL.md` | State transitions, documentation change process, ADR creation triggers. |
 
-### `docs/commands/` — Command Templates
+### `.claude/commands/` — Command Templates
 
 **Primary user commands:**
 

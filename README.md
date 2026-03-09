@@ -17,17 +17,7 @@ The system is designed so that a human only needs to type `/next` to drive all p
 ## Quick Start
 
 1. Clone or copy this repository
-
-2. Register commands
-
-```bash
-mkdir -p .claude/commands
-for cmd in next pick idea check critic audit analyze design implement; do
-  echo "Read and follow docs/commands/${cmd}.md" > .claude/commands/${cmd}.md
-done
-```
-
-3. Open it in Claude Code and say `/next`
+2. Open it in Claude Code and say `/next`
 
 ## How to start a project using this infrastructure
 
@@ -61,11 +51,7 @@ done
 ```
 CLAUDE.md                          ← Claude Code entrypoint (auto-loaded)
 README.md                          ← This file
-docs/
-  ai/
-    CLAUDE.md                      ← Authoritative workflow and behavioral rules
-    DOCUMENT_SYSTEM.md             ← Document registry and hierarchy
-    CHANGE_PROTOCOL.md             ← State transitions and change process
+.claude/
   commands/
     next.md                        ← /next primary workflow command
     pick.md                        ← /pick evaluate a proposal
@@ -76,6 +62,11 @@ docs/
     analyze.md                     ← /analyze internal mode
     design.md                      ← /design internal mode
     implement.md                   ← /implement internal mode
+docs/
+  ai/
+    CLAUDE.md                      ← Authoritative workflow and behavioral rules
+    DOCUMENT_SYSTEM.md             ← Document registry and hierarchy
+    CHANGE_PROTOCOL.md             ← State transitions and change process
   core/
     SPEC.md                        ← Non-negotiable constraints (fill in)
     VISION.md                      ← Project vision (fill in)
