@@ -14,6 +14,21 @@ This repository provides a **spec-driven development workflow** — a structured
 
 The system is designed so that a human only needs to type `/next` to drive all project work. All governance enforcement is automatic.
 
+## Quick Start
+
+```bash
+# 1. Clone the template
+git clone https://github.com/nohtaesang/ai-spec-driven-dev-infra my-project
+cd my-project
+
+# 2. Start Claude Code in this repository
+
+# 3. Begin the workflow
+/next
+```
+
+That's it. `/next` handles everything — context restoration, task selection, execution, analysis, and audit.
+
 ## How to start a project using this infrastructure
 
 1. **Clone or copy** this repository as your project's starting point.
