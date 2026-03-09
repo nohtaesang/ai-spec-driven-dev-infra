@@ -104,7 +104,7 @@ Example:
 - [ ] TASK-001 type:design phase:setup name: Define project specification
   target: docs/core/SPEC.md
   depends: none
-  acceptance: SPEC.md contains all non-negotiable architectural constraints for the project. Short and stable.
+  acceptance: SPEC.md contains all non-negotiable architectural constraints for the project. Short and stable. If a technology stack or framework is chosen, that choice must be recorded as an ADR.
 
 - [ ] TASK-002 type:design phase:setup name: Define project vocabulary
   target: docs/core/DEFINITIONS.md
@@ -121,6 +121,11 @@ Example:
   depends: TASK-001
   acceptance: ASSUMPTIONS.md lists design assumptions. NON_GOALS.md lists what the project is NOT building. Both are consistent with SPEC.md.
 
+- [ ] TASK-005 type:document phase:setup name: Phase 0 → Phase 1 gate
+  target: docs/project/TASKS.md, docs/ai/DOCUMENT_SYSTEM.md
+  depends: TASK-001, TASK-002, TASK-003, TASK-004
+  acceptance: All Phase 0 documents verified to contain real content (no placeholders remaining in SPEC.md, DEFINITIONS.md, VISION.md, PRINCIPLES.md, ASSUMPTIONS.md, NON_GOALS.md). Any technology stack or framework choices are recorded as ADRs. Level-2 document paths registered in DOCUMENT_SYSTEM.md. Phase 1 task list initialized in TASKS.md with design tasks derived from SPEC.md.
+
 ---
 
 ## Phase 1: Core Design Documents
@@ -130,4 +135,4 @@ Example:
 ---
 
 *Completed items: [DONE.md](./DONE.md) · Decisions: [DECISIONS.md](./DECISIONS.md) · ADRs: [decisions/](./decisions/)*
-*Next task ID: TASK-005*
+*Next task ID: TASK-006*
