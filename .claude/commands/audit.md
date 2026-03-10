@@ -2,7 +2,9 @@
 
 > **Milestone command.** Use `/audit` at phase boundaries, milestones, or for periodic full-project reviews. For validating recent changes only, use `/check` instead.
 >
-> The authoritative audit definition is in [`docs/ai/CLAUDE.md`](../ai/CLAUDE.md) (see Step 7: Automatic Audit).
+> Authoritative step definition: `docs/ai/runtime/STEP_7_AUDIT.md`
+> Output template: `docs/ai/templates/AUDIT_REPORT.md`
+> Governance checks: `docs/ai/GOVERNANCE_CHECKS.md`
 
 Use this command to perform a full system-level review of consistency across all documentation and between documentation and code.
 
@@ -14,28 +16,21 @@ Use this command to perform a full system-level review of consistency across all
    - `docs/core/ASSUMPTIONS.md` — design context
    - `docs/ai/DOCUMENT_SYSTEM.md` — document registry
    - `docs/core/DEFINITIONS.md`
+   - `docs/ai/GOVERNANCE_CHECKS.md` — fail conditions
    - Relevant ADRs from `docs/project/decisions/`
 
 2. Then read all project content documents that exist.
 
-3. Check for (13-point audit):
-   - **SPEC violations**: any document contradicting SPEC.md
-   - **Non-goal violations**: features conflicting with NON_GOALS.md
-   - **Assumption conflicts**: designs that silently contradict ASSUMPTIONS.md
-   - **Hierarchy violations**: lower document contradicting a higher one
-   - **Extension boundary violations**: domain-specific concepts in core
-   - **Performance constraint violations**: designs incompatible with SPEC performance requirements
-   - **ADR conflicts**: work contradicting accepted ADRs
-   - **Term drift**: terms used in documents but not defined in `DEFINITIONS.md`
-   - **Contradictions**: statements in one document that conflict with another
-   - **Orphaned references**: links to documents or sections that don't exist
-   - **Stale content**: information that appears outdated vs. current state
-   - **Missing registrations**: documents that exist but aren't listed in `DOCUMENT_SYSTEM.md`
-   - **Code drift**: code that doesn't match documented architecture (if code exists)
+3. Check for all 13 audit points per `docs/ai/runtime/STEP_7_AUDIT.md`:
+   - SPEC violations, non-goal violations, assumption conflicts
+   - Hierarchy violations, extension boundary violations, performance violations
+   - ADR conflicts, term drift, contradictions
+   - Orphaned references, stale content, missing registrations, code drift
 
-4. Produce an audit report:
-   - **Status**: Overall health (green / yellow / red)
-   - **Issues**: List of problems found, categorized by type
-   - **Recommendations**: Suggested fixes, prioritized
+4. Produce output in the exact format from `docs/ai/templates/AUDIT_REPORT.md`.
+
+   **Red** = stop. **Yellow** = note and proceed. **Green** = clean.
+
+   See `docs/ai/GOVERNANCE_CHECKS.md` for the full list of fail conditions.
 
 5. Do NOT fix issues automatically. Present findings for review.

@@ -19,6 +19,11 @@ PROJECT SETUP INSTRUCTIONS:
 Replace the sections below with your project's actual architectural constraints.
 Each section should define a non-negotiable rule that all design and code must follow.
 
+SPEC Clause IDs:
+- Number each constraint clause as SPEC-NNN (e.g., SPEC-001, SPEC-002).
+- Other documents reference SPEC clauses by ID (e.g., "per SPEC-003").
+- IDs are stable — do not renumber. Deprecated clauses are marked, not removed.
+
 Example sections you might include:
 - System Scope (what the system is)
 - Data Model (core entities and relationships)

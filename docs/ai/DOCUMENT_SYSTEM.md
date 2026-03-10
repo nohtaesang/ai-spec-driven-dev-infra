@@ -101,10 +101,53 @@ Individual Architecture Decision Record files. Each captures one architectural d
 
 | File | Purpose |
 |---|---|
-| `CLAUDE.md` | Behavioral rules, `/next` pipeline (authoritative definition), task types, ADR rules, constraint enforcement. |
+| `CLAUDE.md` | Behavioral rules, document hierarchy, stop principles, ADR rules, standing rules. |
 | `DOCUMENT_SYSTEM.md` | This file. Describes the doc system and constraint hierarchy. |
 | `CHANGE_PROTOCOL.md` | State transitions, documentation change process, ADR creation triggers. |
 | `BOOTSTRAP_PROTOCOL.md` | Level-2 bootstrap: template detection, structured intake, foundation doc generation, Level-2 document selection. |
+| `GOVERNANCE_CHECKS.md` | Explicit fail conditions for all governance checks. Referenced by `/next`, `/analyze`, `/audit`, `/check`. |
+
+### `docs/ai/runtime/` — Pipeline Step Definitions
+
+Authoritative step-by-step execution spec for the `/next` pipeline. Each file defines one step.
+
+| File | Purpose |
+|---|---|
+| `README.md` | Pipeline overview and execution order. |
+| `STEP_0_BOOTSTRAP.md` | Detect template state, enter bootstrap if needed. |
+| `STEP_1_RESTORE_CONTEXT.md` | Read governance and project state documents. |
+| `STEP_2_REPORT_STATE.md` | Output standardized status report. |
+| `STEP_3_PICK_TASK.md` | Resume `[-]` or select next eligible `[ ]` task. |
+| `STEP_4_LOAD_TASK_CONTEXT.md` | Read task-type-specific documents. |
+| `STEP_5_EXECUTE.md` | Run the task workflow with governance checks. |
+| `STEP_6_ANALYZE.md` | Automatic analysis with fixed output format. |
+| `STEP_7_AUDIT.md` | Automatic audit with fixed output format. |
+| `STEP_8_CLOSE_TASK.md` | Mark complete, update tracking, report. |
+
+### `docs/ai/templates/` — Output Format Templates
+
+Fixed output formats referenced by runtime steps.
+
+| File | Used By |
+|---|---|
+| `STATE_REPORT.md` | Step 2 (Report State) |
+| `ANALYSIS_REPORT.md` | Step 6 (Analyze) |
+| `AUDIT_REPORT.md` | Step 7 (Audit) |
+
+### `docs/process/` — Reusable Process Documents
+
+Generic process guardrails that apply to all projects using this infrastructure.
+
+| File | Purpose |
+|---|---|
+| `DEFINITION_OF_DONE.md` | Task completion checklist (build, test, lint, term drift, docs, impact). |
+| `CHANGE_IMPACT_CHECKLIST.md` | What a change might affect (spec, types, config, tests, docs, ADRs). |
+| `REPOSITORY_CONVENTIONS.md` | File, module, docs, config, and API placement rules. |
+| `CONFIG_CONSTANTS_POLICY.md` | No magic numbers, tunables in config, single-source defaults. |
+| `AI_SESSION_BOOTSTRAP.md` | Template for project-specific AI session startup context. |
+| `ARCHITECTURE_GUARDRAILS.md` | Framework for defining forbidden dependency patterns. |
+| `SPEC_CODE_CONSISTENCY.md` | Framework for spec ↔ code validation. |
+| `PROJECT_EXTENSIONS.md` | Defines what belongs in project repos vs. this template. |
 
 ### `.claude/commands/` — Command Templates
 
@@ -112,7 +155,7 @@ Individual Architecture Decision Record files. Each captures one architectural d
 
 | File | Purpose |
 |---|---|
-| `next.md` | `/next` primary workflow command. Points to `docs/ai/CLAUDE.md` for the authoritative pipeline definition. |
+| `next.md` | `/next` primary workflow command. References `docs/ai/runtime/STEP_*.md` for step definitions. |
 | `pick.md` | `/pick` — evaluate a proposal and decide whether to adopt it. |
 | `idea.md` | `/idea` — evaluate a new idea before it enters the task system. |
 | `check.md` | `/check` — validate recent changes against infrastructure rules. |

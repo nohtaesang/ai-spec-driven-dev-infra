@@ -66,6 +66,30 @@ Higher constrains lower. SPEC.md is non-negotiable. ADRs constrain downstream de
 | `/design` | Design mode. Normally invoked internally by `/next`. |
 | `/implement` | Implementation mode. Normally invoked internally by `/next`. |
 
+## Domain Term Registration
+
+All domain terminology must be registered in `docs/core/DEFINITIONS.md`. This applies to every design document (SPEC, models, architecture, UX, extensions).
+
+1. **Register new terms immediately.** When a new domain term appears in any document, add it to DEFINITIONS.md before closing the task.
+2. **No undefined terminology.** Documents must not use domain terms absent from DEFINITIONS.md. Define first, then use.
+3. **Detect term drift.** During `/analyze` and `/audit`, scan for terms that appear to be domain concepts but are missing from DEFINITIONS.md. Flag as **"term drift"**.
+4. **Gate task completion.** Before closing any design task, verify all newly introduced terms are registered. Missing registrations block completion.
+
+## Process Documents
+
+Reusable process guardrails are in `docs/process/`:
+
+| Document | Purpose |
+|---|---|
+| `DEFINITION_OF_DONE.md` | Task completion checklist |
+| `CHANGE_IMPACT_CHECKLIST.md` | What a change might affect |
+| `REPOSITORY_CONVENTIONS.md` | File and module placement rules |
+| `CONFIG_CONSTANTS_POLICY.md` | Magic numbers and config policy |
+| `AI_SESSION_BOOTSTRAP.md` | New AI session startup context |
+| `ARCHITECTURE_GUARDRAILS.md` | Framework for defining forbidden dependencies |
+| `SPEC_CODE_CONSISTENCY.md` | Framework for spec ↔ code validation |
+| `PROJECT_EXTENSIONS.md` | What belongs in project repos, not this template |
+
 ## Project Phase
 
 See `docs/project/TASKS.md` for current phase and active work.

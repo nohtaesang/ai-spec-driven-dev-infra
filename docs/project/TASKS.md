@@ -25,7 +25,13 @@ Claude must read this file on every `/next` before doing any work.
   depends: TASK-NNN, TASK-NNN | none
   acceptance: <what "done" means>
   progress: <what has been completed so far>     ← only on [-] tasks
+  relates: SPEC-NNN, ADR-NNN, TASK-NNN          ← optional
+  creates: ADR-NNN, <doc path>                   ← optional
 ```
+
+**Required fields**: `type`, `target`, `depends`, `acceptance`, `progress` (on `[-]` tasks only).
+
+**Optional fields**: `relates` (cross-references to SPEC clauses, ADRs, or other tasks), `creates` (expected outputs — ADRs or new documents). Use when the traceability is useful; omit when obvious.
 
 The `progress:` field is present on all `[-]` (in-progress) tasks. It is initialized to `started` when a task moves to `[-]`, then updated with meaningful content at natural milestones so the next session can resume without repeating work. It is cleared when a task moves to `[x]` or back to `[ ]`.
 

@@ -10,7 +10,7 @@ This repository provides a **spec-driven development workflow** — a structured
 
 - A **SPEC.md** defines non-negotiable architectural constraints
 - A **document hierarchy** enforces that higher-level decisions constrain lower-level ones
-- An **8-step `/next` pipeline** automates context restoration, task selection, execution, analysis, and audit
+- A **9-step `/next` pipeline** (steps 0–8) automates context restoration, task selection, execution, analysis, and audit
 - **Architecture Decision Records (ADRs)** capture binding decisions
 - **Automatic governance checks** prevent specification violations, scope creep, and architectural drift
 
@@ -53,22 +53,16 @@ The system is designed so that a human only needs to type `/next` to drive all p
 ```
 CLAUDE.md                          ← Claude Code entrypoint (auto-loaded)
 README.md                          ← This file
-.claude/
-  commands/
-    next.md                        ← /next primary workflow command
-    pick.md                        ← /pick evaluate a proposal
-    idea.md                        ← /idea evaluate a new idea
-    check.md                       ← /check validate recent changes
-    critic.md                      ← /critic challenge a design
-    audit.md                       ← /audit full project system audit
-    analyze.md                     ← /analyze internal mode
-    design.md                      ← /design internal mode
-    implement.md                   ← /implement internal mode
+.claude/commands/                   ← Command templates (/next, /pick, /audit, etc.)
 docs/
   ai/
-    CLAUDE.md                      ← Authoritative workflow and behavioral rules
+    CLAUDE.md                      ← Behavioral rules (constitution)
+    GOVERNANCE_CHECKS.md           ← Explicit fail conditions
     DOCUMENT_SYSTEM.md             ← Document registry and hierarchy
     CHANGE_PROTOCOL.md             ← State transitions and change process
+    BOOTSTRAP_PROTOCOL.md          ← Project bootstrap workflow
+    runtime/                       ← Pipeline step definitions (STEP_0–STEP_8)
+    templates/                     ← Fixed output formats (state, analysis, audit)
   core/
     SPEC.md                        ← Non-negotiable constraints (fill in)
     VISION.md                      ← Project vision (fill in)
@@ -76,11 +70,14 @@ docs/
     ASSUMPTIONS.md                 ← Design assumptions (fill in)
     NON_GOALS.md                   ← Scope boundaries (fill in)
     DEFINITIONS.md                 ← Glossary (grows over time)
+  process/                         ← Reusable process guardrails
   project/
     TASKS.md                       ← Task tracking (source of truth)
     DONE.md                        ← Completion log
     DECISIONS.md                   ← ADR index
     decisions/                     ← Individual ADR files
+scripts/                           ← Lint and consistency check templates
+prompts/                           ← AI prompt templates
 ```
 
 ## Commands
@@ -113,7 +110,7 @@ These are invoked internally by `/next` based on task type. Available for standa
 
 ## Key concepts
 
-- **`/next`** is the primary workflow command. It runs the full 8-step pipeline.
+- **`/next`** is the primary workflow command. It runs the full 9-step pipeline (steps 0–8).
 - **SPEC.md** is the highest-level constraint. Nothing may contradict it.
 - **Document hierarchy**: `SPEC → DEFINITIONS → Models → Architecture → Code`. Higher constrains lower.
 - **ADRs** capture architectural decisions as immutable records.

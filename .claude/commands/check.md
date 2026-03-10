@@ -2,6 +2,9 @@
 
 Validate recent changes or implementation output against infrastructure rules. Unlike `/audit` (which performs a full project-level review), `/check` focuses on **recent work only**.
 
+> Governance checks: `docs/ai/GOVERNANCE_CHECKS.md`
+> Change impact checklist: `docs/process/CHANGE_IMPACT_CHECKLIST.md`
+
 ---
 
 ## Instructions for Claude

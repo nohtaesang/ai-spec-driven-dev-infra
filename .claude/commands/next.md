@@ -2,67 +2,38 @@
 
 `/next` is the primary command for all project work. It runs the full workflow pipeline automatically.
 
-**The authoritative pipeline definition is in [`docs/ai/CLAUDE.md`](../docs/ai/CLAUDE.md).** This file is a concise reference only. If there is any conflict, `CLAUDE.md` governs.
+## Authoritative Sources
 
----
+- **Behavioral rules**: `docs/ai/CLAUDE.md`
+- **Pipeline steps**: `docs/ai/runtime/STEP_*.md`
+- **Governance checks**: `docs/ai/GOVERNANCE_CHECKS.md`
+- **Output templates**: `docs/ai/templates/`
 
-## Quick Reference
+## Pipeline
 
-```
-/next
-  │
-  ├─ 0. Bootstrap detection (if SPEC.md has BOOTSTRAP:PENDING → run bootstrap protocol)
-  ├─ 1. Restore context (7 files: SPEC, NON_GOALS, ASSUMPTIONS, DOCUMENT_SYSTEM, CLAUDE, DEFINITIONS, TASKS)
-  ├─ 2. Report state (phase, task, progress, governance status, 5 conflict checks)
-  ├─ 3. Detect [-] or select next [ ]  →  set [-]  →  write progress: started
-  ├─ 4. Load task-type context (design / implement / document)
-  ├─ 5. Execute task (verify SPEC + non-goals + assumptions + ADRs + extensions + perf)
-  ├─ 6. Auto-analysis (6 named checks, stop on VIOLATION)
-  ├─ 7. Auto-audit (13-point consistency check, stop on red)
-  └─ 8. Complete  →  [x] + DONE.md + ADR file + DECISIONS.md
-```
+Execute these steps in strict order. Do not skip or merge steps. If a step triggers a stop condition, halt and report.
 
-## Step 0: Bootstrap
-
-When the repository is in template state (SPEC.md contains `<!-- BOOTSTRAP:PENDING -->` and no tasks are in progress or completed), `/next` enters bootstrap mode automatically.
-
-Bootstrap asks structured intake questions, generates foundation documents, selects Level-2 documents, and initializes Phase 1 tasks. See [`docs/ai/BOOTSTRAP_PROTOCOL.md`](../docs/ai/BOOTSTRAP_PROTOCOL.md) for the full protocol.
+1. Read `docs/ai/runtime/STEP_0_BOOTSTRAP.md` — if bootstrap is needed, run it and stop.
+2. Read and execute `docs/ai/runtime/STEP_1_RESTORE_CONTEXT.md`
+3. Read and execute `docs/ai/runtime/STEP_2_REPORT_STATE.md`
+4. Read and execute `docs/ai/runtime/STEP_3_PICK_TASK.md`
+5. Read and execute `docs/ai/runtime/STEP_4_LOAD_TASK_CONTEXT.md`
+6. Read and execute `docs/ai/runtime/STEP_5_EXECUTE.md`
+7. Read and execute `docs/ai/runtime/STEP_6_ANALYZE.md`
+8. Read and execute `docs/ai/runtime/STEP_7_AUDIT.md`
+9. Read and execute `docs/ai/runtime/STEP_8_CLOSE_TASK.md`
 
 ## `/next` (no arguments)
 
-Runs all 8 steps. See `docs/ai/CLAUDE.md` → "The `/next` Pipeline" for full step definitions.
+Runs all steps. Selects the next eligible task automatically.
 
-## `/next <new request>`
+## `/next <request>`
 
-Steps 1–2 run the same. Then the request is classified:
+Steps 1–2 run normally. Then the request is classified per `docs/ai/runtime/STEP_3_PICK_TASK.md`:
 
 - **(a) Continuation** — relates to current `[-]` task → continue from Step 4.
 - **(b) New task** — no conflict → add to `TASKS.md`. If no `[-]` and deps met, start. If `[-]` exists, ask user.
 - **(c) Conflict** — contradicts SPEC.md, NON_GOALS.md, ADRs, or plans → stop and report.
-
-See `docs/ai/CLAUDE.md` → "`/next <new request>`" for full classification rules.
-
----
-
-## Governance Status
-
-`/next` reports governance status in Step 2 so users understand whether the project has entered the governed design phase.
-
-When core governance documents are still placeholders:
-
-```
-Phase: Phase 0 — Project Setup
-Last completed: none
-In progress: none
-Next eligible: TASK-001 Define project specification
-
-Governance: inactive
-
-SPEC conflicts: none found
-Non-goal conflicts: none found
-```
-
-`inactive` means "no constraints defined yet" — not "no violations found." Governance becomes `active` once `SPEC.md` contains real project constraints.
 
 ---
 

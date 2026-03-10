@@ -34,223 +34,47 @@ Implementation          ← code must conform to all above
 
 `/next` is the single entrypoint for all normal project work. It runs a full pipeline automatically.
 
----
+The pipeline is defined as 9 sequential steps (0–8) in `docs/ai/runtime/`. Each step has explicit inputs, outputs, procedures, and stop conditions.
 
-## The `/next` Pipeline
+**Authoritative step definitions**: `docs/ai/runtime/STEP_*.md`
+**Pipeline overview**: `docs/ai/runtime/README.md`
+**Output templates**: `docs/ai/templates/`
 
-Every `/next` starts with Step 0. If bootstrap is needed, run the bootstrap protocol. Otherwise, execute Steps 1–8 in order. Do not skip steps.
-
-### Step 0: Bootstrap Detection
-
-Before anything else, check if the project is in template state:
-
-1. Read `docs/core/SPEC.md`
-2. If it contains `<!-- BOOTSTRAP:PENDING -->` AND no tasks in `TASKS.md` are `[-]` or `[x]` → **enter bootstrap mode**
-3. Follow `docs/ai/BOOTSTRAP_PROTOCOL.md` for the full bootstrap procedure
-4. After bootstrap completes, stop. The user will run `/next` again to continue with the normal pipeline.
-
-If not in template state → proceed to Step 1.
-
-### Step 1: Restore Context
-
-Read these files in order:
-
-1. `docs/core/SPEC.md` — non-negotiable architectural constraints
-2. `docs/core/NON_GOALS.md` — scope boundary
-3. `docs/core/ASSUMPTIONS.md` — design context
-4. `docs/ai/DOCUMENT_SYSTEM.md` — documentation structure
-5. `docs/ai/CLAUDE.md` — this file (behavioral rules)
-6. `docs/core/DEFINITIONS.md` — project vocabulary
-7. `docs/project/TASKS.md` — current project state
-
-**Placeholder handling**: Some registered documents may still be placeholders (contain only section headings or TODO markers). During Step 1, verify existence but do **not** treat placeholder content as authoritative state. Placeholder documents become meaningful only after their design task completes.
-
-### Step 2: Report State
-
-Output a brief status block:
+### Pipeline Summary
 
 ```
-Phase: <active phase name>
-Last completed: TASK-NNN <name>
-In progress: TASK-NNN <name> | none
-  progress: <summary from progress field> | fresh start
-Next eligible: TASK-NNN <name> | none
-
-Governance: active | inactive
-
-SPEC conflicts: <list> | none found
-Non-goal conflicts: <list> | none found
-Assumption conflicts: <list> | none found
-ADR conflicts: <list> | none found
-Inconsistencies: <list> | none found
+/next
+  ├─ 0. Bootstrap detection        → docs/ai/runtime/STEP_0_BOOTSTRAP.md
+  ├─ 1. Restore context            → docs/ai/runtime/STEP_1_RESTORE_CONTEXT.md
+  ├─ 2. Report state               → docs/ai/runtime/STEP_2_REPORT_STATE.md
+  ├─ 3. Pick or resume task        → docs/ai/runtime/STEP_3_PICK_TASK.md
+  ├─ 4. Load task context          → docs/ai/runtime/STEP_4_LOAD_TASK_CONTEXT.md
+  ├─ 5. Execute task               → docs/ai/runtime/STEP_5_EXECUTE.md
+  ├─ 6. Automatic analysis         → docs/ai/runtime/STEP_6_ANALYZE.md
+  ├─ 7. Automatic audit            → docs/ai/runtime/STEP_7_AUDIT.md
+  └─ 8. Close task                 → docs/ai/runtime/STEP_8_CLOSE_TASK.md
 ```
 
-**Governance status rule** (reporting only — does not change enforcement behavior):
-
-Report **`Governance: inactive`** when:
-- `SPEC.md` is still a placeholder (contains only setup instructions, no project-specific constraints), OR
-- core governance documents (`SPEC.md`, `NON_GOALS.md`, `ASSUMPTIONS.md`) have not been filled in yet.
-
-This means governance checks will report "none found" because no constraints exist to violate — not because the project is violation-free.
-
-Report **`Governance: active`** when:
-- `SPEC.md` contains real project constraints, AND
-- governance checks against SPEC, NON_GOALS, and ASSUMPTIONS are meaningful.
-
-This status is informational. Analysis (Step 6) and audit (Step 7) always run regardless of governance status.
-
-### Step 3: Detect or Select Task
-
-- If a task is `[-]` → **continue it**. Read its `progress:` field to understand what was already done. Do not start another.
-- If no task is `[-]` → select the next `[ ]` task where:
-  - All `depends:` are `[x]`.
-  - It appears earliest in the active phase.
-- Set the selected task to `[-]` in `TASKS.md` and write `progress: started` immediately. Save **before any other work**.
-- Update the `progress:` field at natural milestones during work (e.g., "Draft reviewed", "Section 2 complete"). This allows the next session to resume without repeating work.
-
-### Step 4: Load Task Context
-
-Read additional documents based on the task's `type:` field:
-
-| type | Additional reads |
-|---|---|
-| `design` | `docs/core/PRINCIPLES.md`, target document, all docs it references, architecture docs, relevant ADRs from `docs/project/decisions/`. Also read any architecture constraint docs relevant to the task. |
-| `implement` | Architecture docs, scope docs, relevant model/UX docs, relevant ADRs. Also read testing, error handling, and versioning docs if they exist. |
-| `document` | Target document, `docs/ai/CHANGE_PROTOCOL.md` |
-
-**For all types**: if the task's target document is constrained by SPEC.md (see hierarchy above), re-read the relevant SPEC sections before drafting.
-
-### Step 5: Execute Task
-
-Run the workflow for the task's type:
-
-**`type: design`** — Create or update a design document.
-1. Read the target document and all related documents.
-2. **Check existing ADRs** in `docs/project/decisions/` for relevant prior decisions.
-3. **Check conformance with SPEC.md** — the design must implement, not contradict, the SPEC.
-4. **Check NON_GOALS.md** — the feature must not conflict with a stated non-goal.
-5. **Check ASSUMPTIONS.md** — identify which assumptions the design depends on.
-6. **Check extension boundary** — domain-specific features must go in extensions, not core.
-7. **Check performance constraints** — design must not violate SPEC performance requirements.
-8. Check for conflicts with other existing documents.
-9. Draft the design content.
-10. Present draft for user review.
-11. Apply changes after approval.
-12. Add new terms to `DEFINITIONS.md` if any were introduced.
-13. **Create ADR** in `docs/project/decisions/` if the task involves an architectural decision.
-14. Update `DECISIONS.md` index if a new ADR was created.
-
-**`type: implement`** — Write application code.
-1. Verify feature is in scope per scope documents and `TASKS.md`.
-2. **Check NON_GOALS.md** — verify feature does not conflict with a non-goal.
-3. **Check ASSUMPTIONS.md** — verify implementation aligns with stated assumptions.
-4. **Check existing ADRs** for relevant prior decisions.
-5. **Verify conformance with SPEC.md** (all relevant sections including performance constraints).
-6. **Verify extension boundary** — domain-specific code must be in extension modules, not core.
-7. Update documentation first if the implementation requires doc changes.
-8. Implement the code.
-9. Test.
-
-**`type: document`** — Update workflow or process documentation.
-1. Read the target document.
-2. Draft updated content.
-3. Present for review.
-4. Apply changes.
-
-### Step 6: Automatic Analysis
-
-Runs automatically after every task. Do not skip. Do not wait for user request.
-
-1. Check the target document and all documents modified during the task.
-2. **Verify SPEC conformance** — flag any deviation from SPEC sections.
-3. **Verify non-goal boundary** — flag any feature that conflicts with `NON_GOALS.md`.
-4. **Verify assumption alignment** — flag any design that silently contradicts `ASSUMPTIONS.md`.
-5. **Verify extension boundary** — flag any domain-specific concepts leaking into core.
-6. **Verify performance constraints** — flag designs that violate SPEC performance requirements.
-7. Verify consistency with `PRINCIPLES.md` and architecture documents.
-8. Verify the document hierarchy is respected.
-9. **Check ADR consistency** — verify no contradiction with accepted ADRs.
-10. Identify gaps, ambiguities, or open questions.
-11. Output:
-
-```
-Analysis:
-- <finding>
-- ...
-SPEC conformance: ok | VIOLATION: <detail>
-Non-goal boundary: ok | VIOLATION: <detail>
-Assumption alignment: ok | CHANGE NEEDED: <detail>
-Extension boundary: ok | VIOLATION: <detail>
-Performance constraints: ok | VIOLATION: <detail>
-ADR consistency: ok | CONFLICT: <detail>
-Issues: <count> | none
-```
-
-**If any VIOLATION is found → stop immediately. Do not proceed to Step 7.**
-
-### Step 7: Automatic Audit
-
-Runs automatically after every task. Do not skip. Do not wait for user request.
-
-1. Re-read `docs/core/SPEC.md`, `docs/core/DEFINITIONS.md`, and `docs/project/TASKS.md`.
-2. Check for:
-   - **SPEC violations**: any document contradicting SPEC.md
-   - **Non-goal violations**: features conflicting with NON_GOALS.md
-   - **Assumption conflicts**: designs that silently contradict ASSUMPTIONS.md
-   - **Hierarchy violations**: lower document contradicting a higher one
-   - **Extension boundary violations**: domain-specific concepts in core
-   - **Performance constraint violations**: designs incompatible with SPEC performance requirements
-   - **ADR conflicts**: work contradicting accepted ADRs
-   - **Term drift**: terms used in modified documents but not in `DEFINITIONS.md`
-   - **Contradictions**: statements that conflict across documents
-   - **Orphaned references**: links to documents or sections that don't exist
-   - **Stale content**: information outdated given the work just completed
-   - **Missing registrations**: documents that exist but are not listed in `DOCUMENT_SYSTEM.md`
-   - **Code drift**: implementation that diverges from documented architecture
-3. Output:
-
-```
-Audit:
-- SPEC violations: <list> | none
-- Non-goal violations: <list> | none
-- Assumption conflicts: <list> | none
-- Hierarchy violations: <list> | none
-- Extension violations: <list> | none
-- Performance violations: <list> | none
-- ADR conflicts: <list> | none
-- Term drift: <list> | none
-- Contradictions: <list> | none
-- Orphaned refs: <list> | none
-- Stale content: <list> | none
-- Missing registrations: <list> | none
-- Code drift: <list> | none
-Status: green | yellow | red
-```
-
-- **Red** (any SPEC/hierarchy/extension/performance/non-goal violation or ADR conflict) → stop. Do not complete task.
-- **Yellow** (non-blocking issues) → note and proceed.
-- **Green** → proceed.
-
-### Step 8: Complete Task
-
-1. Set the task to `[x]` in `TASKS.md`.
-2. Append to `DONE.md`: `- [x] TASK-NNN: Name (YYYY-MM-DD)`
-3. Record any decisions as ADR files in `docs/project/decisions/` and update `DECISIONS.md` index.
-4. Check if any `[!]` BLOCKED tasks are now unblocked → set to `[ ]`.
-5. Report: what was completed, analysis summary, audit status, next eligible task.
+Execute steps in strict order. Do not skip or merge steps. If a step triggers a stop condition, halt and report.
 
 ---
 
-## `/next <new request>`
+## Governance
 
-When the user provides a request alongside `/next`:
+Explicit fail conditions for all governance checks are in `docs/ai/GOVERNANCE_CHECKS.md`. That file is authoritative for determining pass/fail verdicts.
 
-1. Execute Steps 1–2 (restore context, report state).
-2. **Classify the request** as one of:
-   - **(a) Continuation** — relates to the `[-]` task → incorporate the input and continue from Step 4.
-   - **(b) New task** — does not conflict → create a new task in `TASKS.md` (next sequential ID, determine `type:` and `phase:`, identify dependencies, insert at end of appropriate phase). If no task is `[-]` and dependencies are met, start it. If a task is already `[-]`, ask the user: finish current first, or abandon and switch?
-   - **(c) Conflict** — contradicts SPEC.md, NON_GOALS.md, ADRs, extension boundary, plans, scope, or architecture → **stop and report** the conflict with document references. Do not proceed.
-3. Continue with Steps 3–8 for the determined task.
+### Stop Principles
+
+Claude must **stop and report** (not proceed) when:
+
+- SPEC.md would be contradicted
+- NON_GOALS.md would be violated
+- More than one `[-]` task exists
+- Target document is not registered in DOCUMENT_SYSTEM.md
+- Implementation is requested but governing design docs are still placeholders
+- Architecture change is implied but no ADR exists or is proposed
+- Required related documents were not read before executing
+- Accepted ADR would be contradicted without a superseding ADR
 
 ---
 
@@ -298,7 +122,8 @@ docs/project/decisions/
 
 - **Date**: YYYY-MM-DD
 - **Status**: accepted | superseded by ADR-NNNN | deprecated
-- **SPEC reference**: Section N (if applicable)
+- **SPEC reference**: SPEC-NNN (if applicable)
+- **Related tasks**: TASK-NNN (if applicable)
 
 ## Context
 Why this decision was needed.
@@ -321,63 +146,55 @@ What follows from this decision.
 
 ---
 
-## Rules for SPEC.md
+## Rules for Core Documents
 
+### SPEC.md
 - **Highest-level constraint.** No document or code may contradict it.
-- Claude must check SPEC conformance in every analysis (Step 6) and audit (Step 7).
+- Clauses are numbered as `SPEC-NNN` for cross-referencing.
 - If a task requires changing SPEC.md, **stop and report**. The change must be approved and recorded as an ADR before proceeding.
 - SPEC.md is read first during context restoration.
 
-## Rules for Extension Boundary
+### NON_GOALS.md
+- Defines what the project is NOT building.
+- If a proposed feature falls within a non-goal → **stop and flag the conflict**. Do not proceed.
+- If a feature is adjacent to a non-goal → flag, discuss scope, decide.
+- Changing a non-goal requires an ADR file before updating the document.
 
+### ASSUMPTIONS.md
+- Captures design assumptions that guide but do not mandate.
+- If a design depends on an assumption → reference it explicitly.
+- If a design requires changing an assumption → **propose the change before proceeding**. Create an ADR before modifying.
+- Assumptions are softer than SPEC.md — they can evolve, but not silently.
+
+### Extension Boundary
 - Core entities are domain-neutral.
 - Domain-specific features must be implemented as extensions.
 - Extensions must not modify core data models.
 - Extensions attach through defined extension points.
-- Analysis (Step 6) and audit (Step 7) check for extension boundary violations.
 
-## Rules for Performance Constraints
-
+### Performance Constraints
 - Designs must respect performance constraints defined in SPEC.md.
-- Analysis (Step 6) checks for performance constraint violations.
 
-## Rules for NON_GOALS.md
+---
 
-- Defines what the project is NOT building.
-- If a proposed feature falls within a non-goal → **stop and flag the conflict**. Do not proceed.
-- If a feature is adjacent to a non-goal → flag, discuss scope, decide.
-- Changing a non-goal requires an ADR file in `docs/project/decisions/` (with `DECISIONS.md` index update) before updating the document.
-- Check NON_GOALS.md during Step 5 (execute) for all `design` and `implement` tasks.
-- Analysis (Step 6) and audit (Step 7) check for non-goal violations.
+## Rules for Tracking Documents
 
-## Rules for ASSUMPTIONS.md
-
-- Captures design assumptions that guide but do not mandate.
-- If a design depends on an assumption → reference it explicitly.
-- If a design requires changing an assumption → **propose the change before proceeding**. Create an ADR file in `docs/project/decisions/` documenting the change and update `DECISIONS.md` index before modifying `ASSUMPTIONS.md`.
-- Assumptions are softer than SPEC.md — they can evolve, but not silently. Changes follow the same ADR governance as other architectural decisions.
-- Check ASSUMPTIONS.md during Step 5 (execute) for `design` and `implement` tasks.
-
-## Rules for TASKS.md
-
+### TASKS.md
 - Source of truth for project progress.
 - Read fully before selecting work.
 - Max one `[-]` at a time.
 - Never skip dependencies.
 - Never remove tasks — only change state.
-- New tasks get next sequential ID (noted at bottom of file).
-- Update immediately on state change.
+- New tasks get next sequential ID.
 - Update `progress:` field on `[-]` tasks at natural milestones.
-- If a task is too large for one session, decompose it into subtasks (see Task Decomposition in TASKS.md).
+- See `docs/ai/CHANGE_PROTOCOL.md` for state transitions and mutation rules.
 
-## Rules for DONE.md
-
+### DONE.md
 - Append-only log.
 - Copy task on `[x]` with date.
 - Never modify existing entries.
 
-## Rules for DECISIONS.md
-
+### DECISIONS.md
 - Index of all ADRs in `docs/project/decisions/`.
 - Update when a new ADR file is created.
 - Reference ADR files by number and title.

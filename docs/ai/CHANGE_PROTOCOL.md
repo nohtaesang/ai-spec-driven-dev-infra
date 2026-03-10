@@ -114,6 +114,14 @@ If a `[-]` task proves too large for a single session:
 
 ## When Files Must Be Updated
 
+### TASKS.md Mutation Rules
+
+- On task start: change `[ ]` → `[-]` and write `progress: started` **before any other work**.
+- During execution: update `progress:` at each natural milestone.
+- On completion: change `[-]` → `[x]`, remove `progress:`, and update DONE.md **in the same step**.
+- On completion: write a final summary in DONE.md entry (not just the task title).
+- Never modify `[x]` tasks (append-only history).
+
 ### TASKS.md
 
 | Event | Action |
@@ -220,7 +228,19 @@ Update `DECISIONS.md` index.
 - Reference canonical documents, not copies.
 - Use relative paths: `../core/DEFINITIONS.md`.
 - Reference ADRs by number: `ADR-0001`.
+- Reference SPEC clauses by ID: `SPEC-001`.
+- Reference tasks by ID: `TASK-001`.
 - When removing a document, find and update all references first.
+
+### ID Conventions
+
+| Entity | Format | Example | Scope |
+|---|---|---|---|
+| Task | `TASK-NNN` | TASK-014 | TASKS.md, DONE.md |
+| Decision | `ADR-NNNN` | ADR-0003 | docs/project/decisions/ |
+| SPEC clause | `SPEC-NNN` | SPEC-001 | docs/core/SPEC.md |
+
+IDs are stable and sequential. Do not renumber. Deprecated items are marked, not removed.
 
 ## Conflict Resolution
 
