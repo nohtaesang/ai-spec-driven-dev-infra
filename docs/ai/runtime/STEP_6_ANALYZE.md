@@ -28,33 +28,12 @@ Runs automatically after every task. Do not skip. Do not wait for user request.
 
 ## Output Format
 
-Use the exact format from `docs/ai/templates/ANALYSIS_REPORT.md`:
+Use the exact format from `docs/ai/templates/ANALYSIS_REPORT.md`. Do not deviate.
 
-```
-## Analysis Result
-Task: TASK-NNN
-Target: <file path>
+## Verdict Rules
 
-Checks:
-- SPEC conformance: pass | FAIL: <detail>
-- Non-goal boundary: pass | FAIL: <detail>
-- Assumption alignment: pass | CHANGE NEEDED: <detail>
-- Extension boundary: pass | FAIL: <detail>
-- Performance constraints: pass | FAIL: <detail>
-- ADR consistency: pass | CONFLICT: <detail>
-- Term registration: pass | FAIL: <unregistered terms>
+See `docs/ai/templates/ANALYSIS_REPORT.md` for the complete verdict rules.
 
-Findings:
-1. <observation>
-2. ...
-
-Risks:
-- <risk, if any>
-
-Required follow-up:
-- none | <action items>
-```
-
-## Stop Conditions
-
-- **Any FAIL** → stop immediately. Do not proceed to Step 7.
+- Any **FAIL** → stop immediately. Do not proceed to Step 7.
+- **CHANGE NEEDED** on assumption alignment → may proceed only if the assumption change is proposed as part of the task.
+- All **pass** → proceed to Step 7.

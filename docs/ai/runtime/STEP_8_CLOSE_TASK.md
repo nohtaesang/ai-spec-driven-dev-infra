@@ -13,14 +13,12 @@ Mark the task complete, update all tracking documents, and report the outcome.
 
 ## Pre-Close Checks
 
-Before closing, confirm against `docs/process/DEFINITION_OF_DONE.md`:
+Confirm all items in `docs/process/DEFINITION_OF_DONE.md` are satisfied. At minimum:
 
-1. Step 6 (analysis) passed — no FAIL results.
-2. Step 7 (audit) passed — status is green or yellow (not red).
-3. If the task produced a decision, an ADR file exists.
-4. All new domain terms are registered in DEFINITIONS.md.
-5. Change impact checklist reviewed (`docs/process/CHANGE_IMPACT_CHECKLIST.md`).
-6. For `implement` tasks: build passes, tests pass, no new lint violations.
+- Step 6 (analysis) passed — no FAIL results.
+- Step 7 (audit) passed — status is green or yellow (not red).
+
+`DEFINITION_OF_DONE.md` is the authoritative checklist. Do not close the task if any required item is unsatisfied.
 
 If any check fails → **stop and report**. Do not close the task.
 

@@ -34,38 +34,11 @@ Runs automatically after every task. Do not skip. Do not wait for user request.
 
 ## Output Format
 
-Use the exact format from `docs/ai/templates/AUDIT_REPORT.md`:
+Use the exact format from `docs/ai/templates/AUDIT_REPORT.md`. Do not deviate.
 
-```
-## Audit Result
-Scope: <list of modified docs, related ADRs, related tasks>
+## Verdict Rules
 
-Checks:
-- SPEC violations: none | <list>
-- Non-goal violations: none | <list>
-- Assumption conflicts: none | <list>
-- Hierarchy violations: none | <list>
-- Extension violations: none | <list>
-- Performance violations: none | <list>
-- ADR conflicts: none | <list>
-- Term drift: none | <list>
-- Contradictions: none | <list>
-- Orphaned refs: none | <list>
-- Stale content: none | <list>
-- Missing registrations: none | <list>
-- Code drift: none | <list>
-
-Risk level: low | medium | high
-Status: green | yellow | red
-
-Violations:
-- none | <list>
-
-Recommended action:
-- continue | fix before close | escalate to ADR
-```
-
-## Stop Conditions
+See `docs/ai/templates/AUDIT_REPORT.md` for the complete verdict rules.
 
 - **Red** (any SPEC/hierarchy/extension/performance/non-goal violation or ADR conflict) → **stop**. Do not complete task.
 - **Yellow** (non-blocking issues) → note and proceed to Step 8.

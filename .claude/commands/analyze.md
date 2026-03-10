@@ -36,6 +36,6 @@ Use this mode to review and reason about the current design or a proposed change
 
 4. Produce output in the exact format from `docs/ai/templates/ANALYSIS_REPORT.md`.
 
-   Any **FAIL** blocks task completion. See `docs/ai/GOVERNANCE_CHECKS.md` for the full list of fail conditions.
+   Any **FAIL** blocks task completion. **CHANGE NEEDED** on assumption alignment may proceed only if the assumption change is proposed. See `docs/ai/GOVERNANCE_CHECKS.md` for the full list of fail conditions.
 
 5. Do NOT make changes. This command is read-only analysis.

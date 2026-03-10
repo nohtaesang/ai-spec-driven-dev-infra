@@ -2,7 +2,7 @@
 
 > **Internal mode.** This mode is normally invoked internally by `/next` depending on task type. It remains available for standalone use when needed.
 >
-> The authoritative workflow is defined in [`docs/ai/runtime/STEP_5_EXECUTE.md`](../docs/ai/runtime/STEP_5_EXECUTE.md) (see `type: implement`).
+> The authoritative workflow is defined in `docs/ai/runtime/STEP_5_EXECUTE.md` (see `type: implement`).
 
 Use this mode when writing code. Ensures documentation is respected and updated.
 
