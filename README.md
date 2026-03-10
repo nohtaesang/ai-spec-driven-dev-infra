@@ -63,6 +63,7 @@ docs/
     BOOTSTRAP_PROTOCOL.md          ← Project bootstrap workflow
     runtime/                       ← Pipeline step definitions (STEP_0–STEP_8)
     templates/                     ← Fixed output formats (state, analysis, audit)
+      bootstrap/                   ← Structured templates for bootstrap document generation
   core/
     SPEC.md                        ← Non-negotiable constraints (fill in)
     VISION.md                      ← Project vision (fill in)
@@ -75,8 +76,10 @@ docs/
     TASKS.md                       ← Task tracking (source of truth)
     DONE.md                        ← Completion log
     DECISIONS.md                   ← ADR index
+    PROJECT_STATE.md               ← Session continuity anchor
     decisions/                     ← Individual ADR files
-scripts/                           ← Lint and consistency check templates
+scripts/                           ← Validation and consistency check scripts
+  bootstrap_check/                 ← Post-bootstrap document validator
 prompts/                           ← AI prompt templates
 ```
 
@@ -115,6 +118,8 @@ These are invoked internally by `/next` based on task type. Available for standa
 - **Document hierarchy**: `SPEC → DEFINITIONS → Models → Architecture → Code`. Higher constrains lower.
 - **ADRs** capture architectural decisions as immutable records.
 - **Automatic analysis and audit** run after every task to catch drift.
+- **Task scope guard** prevents work from diverging from the current task without updating TASKS.md.
+- **Session continuity** via PROJECT_STATE.md eliminates context reconstruction overhead.
 - **One task at a time.** Dependencies are enforced. Progress is tracked across sessions.
 
 ## Governance at a glance
