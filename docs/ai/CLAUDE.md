@@ -75,6 +75,7 @@ Claude must **stop and report** (not proceed) when:
 - Architecture change is implied but no ADR exists or is proposed
 - Required related documents were not read before executing
 - Accepted ADR would be contradicted without a superseding ADR
+- Work has diverged from current task scope without updating TASKS.md
 
 ---
 
@@ -107,13 +108,24 @@ docs/project/decisions/
 
 ### When to Create an ADR
 
-- A technology choice is made
-- A design alternative is chosen over another
-- A scope boundary is established
-- A convention or pattern is adopted for the project
-- A SPEC.md change is proposed (mandatory)
+Create an ADR only when the decision is **hard to reverse**, **affects multiple layers**, or is **likely to cause "why was it done this way?" later**. Not every implementation detail needs an ADR.
+
+**Mandatory** (always create):
+- A SPEC.md change is proposed
+- NON_GOALS.md or ASSUMPTIONS.md is modified
+
+**Create when applicable:**
+- A technology choice is made (language, framework, major library)
+- A design alternative is chosen over another with significant trade-offs
+- A scope boundary is established or changed
 - An extension is introduced or removed
 - A performance-related architectural choice is made
+
+**Do NOT create for:**
+- Routine implementation details (naming, file organization within existing conventions)
+- Bug fixes that don't change architecture
+- Minor refactoring that preserves existing design
+- Adding tests or documentation within existing patterns
 
 ### ADR File Format
 

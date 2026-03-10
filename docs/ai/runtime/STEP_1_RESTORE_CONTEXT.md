@@ -16,6 +16,7 @@ Read these files in order:
 6. `docs/ai/GOVERNANCE_CHECKS.md` — explicit fail conditions
 7. `docs/core/DEFINITIONS.md` — project vocabulary
 8. `docs/project/TASKS.md` — current project state
+9. `docs/project/PROJECT_STATE.md` — session continuity anchor (if it exists)
 
 ## Procedure
 
@@ -34,6 +35,7 @@ Some registered documents may still be placeholders (contain only section headin
 - All governance documents loaded
 - Governance status determined (active / inactive)
 - Current phase and task state identified
+- Session continuity context from PROJECT_STATE.md (if available)
 - Missing or placeholder documents noted
 
 ## Stop Conditions

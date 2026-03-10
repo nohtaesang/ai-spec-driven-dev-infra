@@ -69,6 +69,22 @@ During execution, consult these process documents as applicable:
 
 These are not required reads at task start, but should be consulted when making placement or configuration decisions.
 
+## Task Scope Guard
+
+During execution, if the work begins to diverge from the current task's scope:
+
+1. **Pause** — do not continue the divergent work.
+2. **Check** — is the divergent work necessary to complete the current task, or is it a separate concern?
+3. **If necessary prerequisite** — note it in the `progress:` field and continue, but keep it minimal.
+4. **If separate concern** — stop the divergent work. Add a new task to TASKS.md (next sequential ID) and return to the current task.
+
+Examples of task drift:
+- Implementing feature A but starting to refactor module B
+- Fixing a bug but redesigning the surrounding architecture
+- Writing documentation but proposing new features
+
+The rule: **finish or formally abandon the current task before doing unrelated work.**
+
 ## Progress Updates
 
 Update the `progress:` field in TASKS.md at natural milestones during execution (e.g., "Draft reviewed", "Section 2 complete"). This allows the next session to resume without repeating work.

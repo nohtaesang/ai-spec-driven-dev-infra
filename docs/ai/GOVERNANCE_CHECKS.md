@@ -14,6 +14,7 @@ Explicit fail conditions for automated governance. These are the rules that `/ne
 | Task marked `[x]` without DONE.md entry | **FAIL** — append DONE.md before closing |
 | Task marked `[x]` without analysis + audit passing | **FAIL** — run analysis and audit first |
 | Task dependencies (`depends:`) not all `[x]` | **FAIL** — cannot start task |
+| Work diverges from current `[-]` task scope without updating TASKS.md | **FAIL** — pause, add new task or return to current scope |
 
 ## Document Integrity Checks
 
@@ -59,6 +60,7 @@ Claude must **stop and report** (not proceed) when any of the following are true
 - Architecture change is implied but no ADR exists or is proposed
 - Required related documents were not read before executing
 - Accepted ADR would be contradicted without a superseding ADR
+- Work has diverged from current task scope without TASKS.md update
 
 ---
 

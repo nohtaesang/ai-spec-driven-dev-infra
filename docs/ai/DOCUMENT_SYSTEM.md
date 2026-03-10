@@ -82,6 +82,7 @@ Living documents that track progress and decisions.
 | `TASKS.md` | **Source of truth for project progress.** Phase-based task list with states, dependencies, types, and selection rules. |
 | `DONE.md` | Append-only log of completed tasks. |
 | `DECISIONS.md` | **Index** of all Architecture Decision Records. Points to individual ADR files. |
+| `PROJECT_STATE.md` | **Session continuity anchor.** Current phase, focus, recent changes, risks, upcoming decisions. Updated at task completion. |
 
 ### `docs/project/decisions/` — ADR Files
 
@@ -134,6 +135,21 @@ Fixed output formats referenced by runtime steps.
 | `ANALYSIS_REPORT.md` | Step 6 (Analyze) |
 | `AUDIT_REPORT.md` | Step 7 (Audit) |
 
+### `docs/ai/templates/bootstrap/` — Bootstrap Document Templates
+
+Structured templates used by the bootstrap protocol (Step 0 / B5) to generate foundation documents. Each template contains `{{PLACEHOLDER}}` fields filled from intake data.
+
+| File | Generates |
+|---|---|
+| `SPEC.template.md` | `docs/core/SPEC.md` |
+| `VISION.template.md` | `docs/core/VISION.md` |
+| `PRINCIPLES.template.md` | `docs/core/PRINCIPLES.md` |
+| `ASSUMPTIONS.template.md` | `docs/core/ASSUMPTIONS.md` |
+| `NON_GOALS.template.md` | `docs/core/NON_GOALS.md` |
+| `DEFINITIONS.template.md` | `docs/core/DEFINITIONS.md` |
+| `PROJECT_STATE.template.md` | `docs/project/PROJECT_STATE.md` |
+| `ADR.template.md` | `docs/project/decisions/*.md` |
+
 ### `docs/process/` — Reusable Process Documents
 
 Generic process guardrails that apply to all projects using this infrastructure.
@@ -148,6 +164,16 @@ Generic process guardrails that apply to all projects using this infrastructure.
 | `ARCHITECTURE_GUARDRAILS.md` | Framework for defining forbidden dependency patterns. |
 | `SPEC_CODE_CONSISTENCY.md` | Framework for spec ↔ code validation. |
 | `PROJECT_EXTENSIONS.md` | Defines what belongs in project repos vs. this template. |
+
+### `scripts/` — Validation Scripts
+
+Automated checks that complement the governance process.
+
+| Directory | Purpose |
+|---|---|
+| `architecture_lint/` | Template for project-specific forbidden dependency checks. |
+| `spec_consistency_check/` | Template for spec ↔ code type consistency validation. |
+| `bootstrap_check/` | Validates bootstrap output: file existence, placeholder cleanup, section completeness, dummy value detection. Run after bootstrap (Step B9). |
 
 ### `.claude/commands/` — Command Templates
 

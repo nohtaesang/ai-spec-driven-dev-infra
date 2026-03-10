@@ -107,18 +107,21 @@ Accept whatever the user provides. Missing answers default to "to be decided in 
 
 ### B5: Generate and Review Foundation Documents
 
-Using both rounds of intake, generate initial content for all 6 core documents.
+Using both rounds of intake, generate initial content for all foundation documents.
+
+**Templates**: Use the structured templates in `docs/ai/templates/bootstrap/` as the starting point. Fill in the `{{PLACEHOLDER}}` fields with intake data. Do not generate freeform — follow the template structure.
 
 **Generation mapping:**
 
-| Document | Source fields | What to generate |
-|---|---|---|
-| `SPEC.md` | Capabilities, tech stack, performance, integrations | Non-negotiable architectural constraints. Each capability becomes a SPEC entry. Tech choices become constraints. |
-| `VISION.md` | Name, description, problem, target users | Why the project exists, who it serves, what success looks like. |
-| `PRINCIPLES.md` | Product type, constraints | Design principles appropriate to the product type. Preserve the existing Engineering Principles section from the template. |
-| `ASSUMPTIONS.md` | Tech stack, deployment, integrations | Operating assumptions about platform, runtime, dependencies. Items marked "to be decided" become explicit open questions. |
-| `NON_GOALS.md` | Non-goals from Round 1 | Explicit scope boundaries with explanations. |
-| `DEFINITIONS.md` | Key terms from all answers | Initial glossary seeded from intake vocabulary. |
+| Document | Template | Source fields | What to generate |
+|---|---|---|---|
+| `SPEC.md` | `SPEC.template.md` | Capabilities, tech stack, performance, integrations | Non-negotiable architectural constraints. Each capability becomes a SPEC entry. Tech choices become constraints. |
+| `VISION.md` | `VISION.template.md` | Name, description, problem, target users | Why the project exists, who it serves, what success looks like. |
+| `PRINCIPLES.md` | `PRINCIPLES.template.md` | Product type, constraints | Design principles appropriate to the product type. Preserve the existing Engineering Principles section from the template. |
+| `ASSUMPTIONS.md` | `ASSUMPTIONS.template.md` | Tech stack, deployment, integrations | Operating assumptions about platform, runtime, dependencies. Items marked "to be decided" become explicit open questions. |
+| `NON_GOALS.md` | `NON_GOALS.template.md` | Non-goals from Round 1 | Explicit scope boundaries with explanations. |
+| `DEFINITIONS.md` | `DEFINITIONS.template.md` | Key terms from all answers | Initial glossary seeded from intake vocabulary. |
+| `PROJECT_STATE.md` | `PROJECT_STATE.template.md` | Phase, focus, bootstrap date | Session continuity anchor initialized with bootstrap state. |
 
 **Review flow (3 sub-steps):**
 
@@ -135,6 +138,7 @@ Using both rounds of intake, generate initial content for all 6 core documents.
 | ASSUMPTIONS.md  | <count> assumptions, <count> open questions         |
 | NON_GOALS.md    | <count> non-goals defined                          |
 | DEFINITIONS.md  | <count> terms defined                              |
+| PROJECT_STATE   | Initialized with bootstrap state                   |
 
 Want to review any document in detail before approving?
 Name the documents to review, or say "approve" to accept all.
@@ -148,7 +152,7 @@ Name the documents to review, or say "approve" to accept all.
 All foundation documents ready. Writing files now.
 ```
 
-Write all 6 files. Remove `<!-- BOOTSTRAP:PENDING -->` and `<!-- PROJECT SETUP INSTRUCTIONS -->` blocks from each.
+Write all 7 files (6 core + PROJECT_STATE.md). Remove `<!-- BOOTSTRAP:PENDING -->` and `<!-- PROJECT SETUP INSTRUCTIONS -->` blocks from each core document.
 
 ---
 
@@ -156,7 +160,7 @@ Write all 6 files. Remove `<!-- BOOTSTRAP:PENDING -->` and `<!-- PROJECT SETUP I
 
 If the user specified technology choices in Round 2:
 
-1. Create an ADR file in `docs/project/decisions/` for each significant choice
+1. Create an ADR file in `docs/project/decisions/` for each significant choice, using `docs/ai/templates/bootstrap/ADR.template.md` as the template
 2. Update `docs/project/DECISIONS.md` index
 3. Show the ADR(s) to the user (informational — no separate approval needed since the tech choices were already confirmed in the intake)
 
@@ -214,7 +218,19 @@ After Level-2 documents are approved:
 
 ---
 
-### B9: Report
+### B9: Validate Bootstrap Output
+
+Run the bootstrap validation script to verify all generated documents are complete and clean:
+
+```
+python3 scripts/bootstrap_check/check_bootstrap_docs.py
+```
+
+If any **FAIL** results appear, fix the issues before proceeding. Warnings are informational.
+
+---
+
+### B10: Report
 
 Output:
 
@@ -223,7 +239,8 @@ Output:
 
 Project: <name>
 Product type: <type>
-Foundation: 6 documents written
+Foundation: 7 documents written (6 core + PROJECT_STATE.md)
+Validation: passed | passed with warnings
 ADRs: <count> created
 Phase 1: <count> design tasks queued
 
@@ -241,7 +258,7 @@ Bootstrap has **3 explicit approval points** where the user must confirm before 
 | Checkpoint | What is approved | When |
 |---|---|---|
 | Round 1 confirmation | Project identity and scope | After B3 |
-| Foundation doc approval | All 6 generated documents (summary → focused review → approve) | After B5 |
+| Foundation doc approval | All 7 generated documents (summary → focused review → approve) | After B5 |
 | Level-2 doc approval | Selected design documents for Phase 1 | After B7 |
 
 No files are written and no tasks are modified until the relevant approval is given.

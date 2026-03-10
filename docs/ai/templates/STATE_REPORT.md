@@ -30,3 +30,17 @@ Inconsistencies: <list> | none found
 | Next eligible | First `[ ]` task with all dependencies met, or `none` |
 | Governance | `active` if SPEC.md has real constraints; `inactive` if still placeholder |
 | Conflicts | Any conflicts detected during context restore, or `none found` |
+
+## Session Continuity
+
+If `docs/project/PROJECT_STATE.md` exists, include its key fields after the state report:
+
+```
+Session context (from PROJECT_STATE.md):
+  Focus: <current focus>
+  Recent: <most recent change>
+  Risks: <active risks> | none
+  Next session: <start instructions>
+```
+
+If PROJECT_STATE.md does not exist, omit this section.

@@ -9,6 +9,7 @@ Mark the task complete, update all tracking documents, and report the outcome.
 - `docs/project/TASKS.md`
 - `docs/project/DONE.md`
 - `docs/project/DECISIONS.md`
+- `docs/project/PROJECT_STATE.md`
 - `docs/ai/GOVERNANCE_CHECKS.md`
 
 ## Pre-Close Checks
@@ -30,7 +31,13 @@ If any check fails → **stop and report**. Do not close the task.
    - Create ADR file in `docs/project/decisions/`.
    - Update `DECISIONS.md` index.
 4. Check if any `[!]` BLOCKED tasks are now unblocked → set to `[ ]`.
-5. Report:
+5. Update `docs/project/PROJECT_STATE.md`:
+   - Current Phase and Current Focus (if changed)
+   - What Changed Recently (prepend the completed task)
+   - Active Risks (add or resolve as appropriate)
+   - Next Likely Decisions (update based on upcoming work)
+   - Next Session Start (instructions for the next `/next` invocation)
+6. Report:
    - What was completed
    - Analysis summary
    - Audit status
@@ -42,6 +49,7 @@ If any check fails → **stop and report**. Do not close the task.
 - DONE.md entry appended
 - ADR file and DECISIONS.md updated (if applicable)
 - Blocked tasks unblocked (if applicable)
+- PROJECT_STATE.md updated
 - Completion report to user
 
 ## Stop Conditions

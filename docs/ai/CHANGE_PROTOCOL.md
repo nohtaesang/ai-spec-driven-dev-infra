@@ -154,8 +154,8 @@ If a `[-]` task proves too large for a single session:
 
 | Event | Action |
 |---|---|
-| Architectural decision made | Create new ADR file (next sequential number) |
-| Technology choice made | Create new ADR file |
+| Architectural decision made (hard to reverse, cross-cutting, or historically important) | Create new ADR file (next sequential number) |
+| Technology choice made (language, framework, major library) | Create new ADR file |
 | SPEC.md change proposed | **Mandatory** new ADR file before change |
 | Assumption in ASSUMPTIONS.md changed | Create new ADR file before modifying assumption |
 | Previous decision reversed | New ADR with `supersedes ADR-NNNN`; update old ADR status |
