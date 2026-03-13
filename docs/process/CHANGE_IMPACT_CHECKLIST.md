@@ -35,6 +35,13 @@ Before completing any task, review whether the change affects any of the followi
 - [ ] **DECISIONS.md** — Is a new ADR needed?
 - [ ] **Process documents** — Do any process docs need updating?
 
+## Feature Registry (when project adopts FRS)
+
+- [ ] **Feature status** — Does this change add, complete, or deprecate a feature? (Update Registry)
+- [ ] **Test coverage** — Does this change affect test counts for a registered feature?
+- [ ] **Feature flags** — Are flags added, toggled, or removed? (Update Registry)
+- [ ] **Dependencies** — Does this change alter feature dependency chains?
+
 ## Project-Level Extensions
 
 - [ ] **Performance guardrails** — Does this change affect hot paths? (Project-defined)

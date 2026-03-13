@@ -88,6 +88,7 @@ Reusable process guardrails are in `docs/process/`:
 | `AI_SESSION_BOOTSTRAP.md` | New AI session startup context |
 | `ARCHITECTURE_GUARDRAILS.md` | Framework for defining forbidden dependencies |
 | `SPEC_CODE_CONSISTENCY.md` | Framework for spec ↔ code validation |
+| `FEATURE_REGISTRY.md` | Framework for feature/test/flag drift prevention (optional — see adoption criteria) |
 | `PROJECT_EXTENSIONS.md` | What belongs in project repos, not this template |
 
 ## Project Phase

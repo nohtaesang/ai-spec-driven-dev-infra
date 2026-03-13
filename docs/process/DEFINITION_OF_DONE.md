@@ -39,6 +39,13 @@ Every implementation task must satisfy this checklist before being marked `[x]`.
 - [ ] No SPEC.md violations
 - [ ] No non-goal conflicts
 
+## Feature Registry (when project adopts FRS)
+
+- [ ] New or changed features reflected in Feature Registry
+- [ ] Test coverage meets minimum for feature status
+- [ ] Flag state consistent between code and Registry
+- [ ] Feature dependencies accurately recorded
+
 ## Final Gate
 
 - [ ] `/analyze` passes

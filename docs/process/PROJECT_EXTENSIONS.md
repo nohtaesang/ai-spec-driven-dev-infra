@@ -20,6 +20,7 @@ These are generic, reusable across all projects:
 | AI Session Bootstrap template | `docs/process/` | Template with placeholders |
 | Architecture Guardrails framework | `docs/process/` | How to define guardrails |
 | Spec/Code Consistency framework | `docs/process/` | How to set up consistency checks |
+| Feature Registry framework | `docs/process/` | How to set up feature/test/flag tracking |
 | Lint script template | `scripts/architecture_lint/` | Customizable lint skeleton |
 | Consistency check template | `scripts/spec_consistency_check/` | Customizable check skeleton |
 | Prompt templates | `prompts/` | Reusable AI prompt patterns |
@@ -36,6 +37,7 @@ These are project-specific and must NOT be added to this template:
 | Concrete spec/code type lists | `MyType, MyEntity, MyConfig` | Tied to project domain model |
 | Dataset fixtures | `datasets/test/minimal/` | Tied to project data formats |
 | Benchmark suites | `benchmarks/feature_x_latency` | Tied to project performance targets |
+| Concrete Feature Registry | `FEATURE_REGISTRY.md` with real features | Tied to project feature set |
 | Concrete AI session bootstrap | Filled-in architecture summary | Tied to project architecture |
 | Filled-in foundation docs | SPEC.md with real constraints | Tied to project scope |
 
